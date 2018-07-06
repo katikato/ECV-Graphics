@@ -1,12 +1,7 @@
 # ECV-Graphics
 ECV Interactive Grahics based on data available from http://climatemonitoring.info/ecvinventory/
 
-## Description
-
-description of the **ECV Graphics**
-based on the data available from
-http://climatemonitoring.info/ecvinventory
-
+## Preview
 ![alt text](preview.png "ECV Graphics preview")
 
 *author: Katia Cardon - dot2dot 
