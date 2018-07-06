@@ -1,0 +1,43 @@
+<div class=" cell grid-x align-top" >
+    <div class="data-selectors">
+        <div class="">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li v-for="fld in selectorFields">
+                    <a href="#">{{fld.label ? fld.label : fld.colID}}</a>
+                    <ul class="menu">
+                        <li v-for="opt in fld.options" class="row" v-bind:disabled="opt.value==0">
+                            <div class="columns small-1"><input  @change="optionChange()" type="checkbox" v-model="opt.checked" v-bind:disabled="opt.value==0"></div>
+                            <div class="columns">{{opt.key}} <small>({{opt.value}})</small></div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="deselectors" >
+  
+            <div class="grid-x">
+                <div  v-for="sel in selection">
+                    <span  v-for="opt in sel.sel" @click="clearOption(sel.colID, opt.key)" class="current-selection  remove-selection">
+                        <a >{{opt.key}} <i class="fa fa-times"></i></i> </a>
+                    </span>
+                </div>
+                <span class="remove-all">
+                        <a @click="resetOptions()">
+                            Reset all <i class="fa fa-times"></i>
+                        </a>
+                </span>
+            </div> 
+
+            <div class="">Number of active records: 
+                <b>{{nrRecords()}}</b>
+            </div>
+
+            <slot name="callout" ></slot>                    
+
+        </div>  
+    </div>
+
+    
+  
+    
+</div>

@@ -1,0 +1,27 @@
+<div class="data-table-wrapper" v-bind:class="{hide: hide}">
+
+    <!-- trigger table update -->
+    <div class="hide">{{activeRecords.length}} {{csvFilename}}</div>
+
+    <div class="table-view clearfix">
+        <table>
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+    
+        </table>
+
+    </div>
+    <div class="callout float-right">
+        <small>
+            <slot name="callout"></slot>
+            <br>download <a @click="downloadCSV(false)"><i class="fa fa-download" aria-hidden="true"></i> all data</a> or <a @click="downloadCSV(true)"> <i class="fa fa-download" aria-hidden="true"></i> your selection</a>
+            as <input type="text" v-bind:placeholder="csvFilename" v-model="csvFilename" class="filename-input"/>
+        </small>
+    </div>
+    
+</div>

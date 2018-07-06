@@ -1,0 +1,100 @@
+
+<div  v-bind:class="{hide: !ready}" class="tcdr-timeline">
+
+
+    <div class="grid-x">
+        <div class="auto cell grid-x">
+            <div class="auto cell">
+                <h4 ><slot name="timelineTitle">Data contribution timeline</slot></h4>
+            </div>
+            <div class="shrink cell">                        
+                <div class="shrink cell switch tiny">
+                    <input class="switch-input" id="showTimeline" type="checkbox" name="exampleSwitch" v-model="showTimeline">
+                    <label class="switch-paddle" for="showTimeline">
+                        <span class="switch-active" aria-hidden="true"><i class="fa fa-eye-slash" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                        <span class="switch-inactive" aria-hidden="true"><i class="fa fa-eye" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div v-bind:class="{hide: !showTimeline}">
+        <div class="graph-container" v-bind:class="{hide: !ready}"  >
+
+                
+            <div class=" cell grid-x align-right">
+                <label class="shrink cell switch-label">(Show/Hide all data entries)</label>
+                    
+                <div class="shrink cell switch tiny">
+                    <input class="switch-input" id="showDataEntryBars" type="checkbox" name="exampleSwitch" v-model="showDataEntryBars">
+                    <label class="switch-paddle" for="showDataEntryBars">
+                        <span class="switch-active" aria-hidden="true"><i class="fa fa-eye-slash" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                        <span class="switch-inactive" aria-hidden="true"><i class="fa fa-eye" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="graph-header">
+                <div class="top-axis axis" ></div>                    
+            </div>
+
+            <div class="graph-main">
+                
+                <div class="product-group"  v-for="prod in dsByProduct">
+                    <div class="product-label">{{prod.key}} </div> 
+                                
+                    <div v-for="record in dsSelection" class="record-group"  v-bind:data-toggle="record.RecordID + '-dropdown'" >
+                        <div class="bar-label small-1" >
+                            <b>{{record.RecordID}}</b>
+                            <!-- <span  v-bind:class="{toto: showDataEntryBars}"> {{record.ResponsibleOrg}} <b>{{record.StartDateTCDR}}</b> to <b>{{record.EndDateTCDR}}</b></span> -->
+                        </div> 
+                        <div class="record small-10" v-bind:id="'record-'+record.RecordID" v-d3-data="record"  data-holder  @click="recordToggleEntries(record)"> 
+                            <div class="top-record bar-line" >
+                            </div>
+                            <div class="indicators">
+                                <div v-for="indicator in sortBy(entriesById[record.RecordID],'DataStartDate')"  class="indicator-line" v-d3-data="indicator"  >
+                                </div>
+                            </div>
+                            <div class="entries" v-bind:class="{hide: (!showDataEntryBars && record.showEntries != true)}">
+                                <div v-for="entry in sortBy(entriesById[record.RecordID],'DataStartDate')"  class="entry"  >
+                                    <div class="entry-line" v-d3-data="entry">
+                                        <div class="entry-label-anchor">
+                                            <div class="entry-label">
+                                                <b>{{entry.InstAcronym}} | {{entry.SatAcronym}} </b> 
+                                                <b>{{entry.DataStartDate}} </b> to <b>{{entry.DataEndDate}}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    
+    
+                </div>
+                
+            </div>
+                
+            <div class="graph-footer">
+                    <div class="bottom-axis axis" ></div>                                        
+            </div>
+        </div>
+        <div  v-for="record in dsSelection" class="record-dropdown dropdown-pane" v-bind:id="record.RecordID + '-dropdown'" data-dropdown data-hover="true" data-position="top" data-alignment="center" >
+            <br>record: <b>{{record.RecordID}}</b> {{record.ECV_Product}} 
+            <br><b>{{record.ResponsibleOrg}}</b>
+            <br><b>{{record.StartDateTCDR}}</b> to <b>{{record.EndDateTCDR}}</b>
+            <br>&nbsp;
+            <br>GeogrCoverageDomain: <b>{{record.GeogrCoverageDomain}}</b>
+            <br>GeogrCoverageExtent: <b>{{record.GeogrCoverageExtent}}</b>
+            <br>&nbsp;                            
+            <br><b>resolution</b>
+            <br>temporal: {{record.TempResolution}}
+            <br>horizontal: {{record.HorizResolution}}
+            <br>vertical: {{record.VertResolution}}    
+        </div> 
+
+    </div>
+        
+</div>      

@@ -1,0 +1,53 @@
+<div class="ecv-dashboard ecv-inventory" >
+    <div v-bind:class="{hide: !dataLoadError}">
+        An error occurred while loading data
+    </div>
+    
+    <div v-bind:class="{hide: hasRecords}">
+        Loading data ... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+    </div>
+
+    <div v-bind:class="{hide: !hasRecords}"  >
+
+        <h4 id="tcdr-overview">TCDR Overview</h4>
+
+        <tcdr-overview ref="tcdroverview" v-bind:ds="activeRecords">
+            Loading data ... <i class="fa-li fa fa-spinner fa-spin"></i>
+        </tcdr-overview>
+
+
+        <tcdr-timeline ref="tcdrtimeline" v-bind:ds="activeRecords">
+        </tcdr-timeline>
+
+        <tcdr-donuts ref="tcdrdonuts" ></tcdr-donuts>
+        <data-selector ref="ecvselector">
+                <div slot="callout">
+                    <small>
+                        <i class="fa fa-info" aria-hidden="true"></i> 
+                        Select one ECV or more ECV Products
+                     by clicking on the overview graphic
+                        or by using the dropdown selectors above. 
+                         
+                        Use the deselectors to reset or remove selections.
+                    </small>
+                </div>
+            </data-selector>
+    
+        
+        <h3>ECV Inventory Data & Download</h3>
+
+        <data-table ref="ecvtable" v-bind:active-records="activeRecords" v-bind:csv-filename="'ECVInventory.csv'">
+            <div slot="callout">
+                <i class="fa fa-info" aria-hidden="true"></i> Click on the records to view the record details.
+                <br><i class="fa fa-exclamation" aria-hidden="true"></i> The table takes into account any active selections from
+                above.
+            </div>
+        </data-table>
+
+        <div id="bottom-anchor"></div>
+
+    </div>
+    <data-table-record-details ref="ecvrecorddetails"></data-table-record-details>
+
+
+</div>

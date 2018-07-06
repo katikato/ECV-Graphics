@@ -1,0 +1,41 @@
+
+  
+<div class="tcdr-donuts" v-bind:class="{hide: hide}">
+    <div class="grid-x">
+        <div class="auto cell"><h4 ><slot name="donutTitle">Relative Satellite/Instrument contributions</slot></h4></div>
+        <div class="shrink cell">                        
+            <div class="shrink cell switch tiny">
+                <input class="switch-input" id="showDonuts" type="checkbox" name="exampleSwitch" v-model="showDonuts">
+                <label class="switch-paddle" for="showDonuts">
+                    <span class="switch-active" aria-hidden="true"><i class="fa fa-eye-slash" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                    <span class="switch-inactive" aria-hidden="true"><i class="fa fa-eye" aria-hidden="true" style="font-size: 1rem;"></i></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="graph-container" v-bind:class="{hide: !showDonuts}" >
+
+        <div class="graph-main" >
+            <div class="pies grid-x align-center align-middle" >
+                <div class="cell small-6 pie">
+                    <h6>Contribution by covered time span </h6>
+                    <div id="pie-by-time" class="grid-x align-center"></div>   
+                </div>
+                <div class="cell small-6"  >
+                    <div class="grid-x pie  align-middle" v-bind:class="{hide: !hasCurrent}">
+                        <h6 class="cell small-4">Current </h6>
+                        <div id="pie-by-time-current" class="cell small-8 align-center"></div>   
+                    </div>
+                    <div class="grid-x pie  align-middle " v-bind:class="{hide: !hasFuture}">
+                        <h6 class="cell small-4">Future </h6>
+                        <div id="pie-by-time-future" class="cell small-8 align-center"></div>   
+                    </div> 
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+    
+</div>      

@@ -1,0 +1,468 @@
+@import './font-awesome-4.7.0/scss/font-awesome'
+@import './motion-ui/src/motion-ui'
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto+Slab:100,300,400,700|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i')
+@import url('https://fonts.googleapis.com/css?family=Kalam:300,400,700')
+@import _theme_colors
+@import _dynatable
+
+$global-weight-normal: 300	
+$global-weight-bold: 500	
+$global-flexbox: true	
+
+$foundation-palette: (    primary: $base-blue,    secondary: $base-purple,    success: $base-green,    warning: $base-yellow,    alert: $base-red)
+$header-styles: (small: ('h1': ('font-size': 28),'h2': ('font-size': 24),'h3': ('font-size': 20),'h4': ('font-size': 18),'h5': ('font-size': 16),'h6': ('font-size': 14),),medium: ('h1': ('font-size': 36),'h2': ('font-size': 30),'h3': ('font-size': 24),'h4': ('font-size': 22),'h5': ('font-size': 20),'h6': ('font-size': 18),),) !default
+
+$body-font-color: $text	
+$body-font-family: 'Roboto'	
+$body-font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif !default
+
+$header-font-family: Roboto Slab
+$header-font-style: normal
+$font-family-monospace: Roboto Mono, 'Liberation Mono', Courier, monospace
+// $header-font-family: 'Roboto Condensed' 	
+$header-font-weight: 500	
+$header-color: 	$dark-grey
+// $header-lineheight	
+// $small-font-size	
+// $paragraph-lineheight	
+// $code-color	
+// $code-font-family	
+// $code-font-weight	
+// $code-background	
+// $code-border	
+$anchor-color: $base-blue	
+$anchor-color-hover: $dark-blue	
+// $anchor-text-decoration	
+// $anchor-text-decoration-hover: underline	
+$hr-width: 100%	
+$hr-border: 1px dashed $accent-blue	
+// $blockquote-color	
+// $blockquote-border	
+
+// $button-color
+$title-color: #B0BEC5
+
+$axis-line: #9E9E9E
+$axis-text: #9E9E9E
+
+$rec-primary-color: #25A7FB
+$rec-sel-bg: #B3E5FC
+$normal-text-color: #263239
+$gridlines: #e0e0e0
+$light-bg: #fefefe
+$axis-label-color: #9e9e9e
+$alternate-row-color: #F5F5F5
+
+@import './foundation/foundation'
+
+@include foundation-grid
+@include foundation-flex-grid
+@include foundation-flex-classes
+@include foundation-everything(true)
+
+body
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    word-wrap: break-word
+
+// GENERAL BODY & TEXT CLASSES
+strong, b 
+    font-weight: bolder
+
+.underline
+    border-bottom: solid 1px
+
+.uppercase
+    text-transform: uppercase
+.light-shadow
+    box-shadow: #EEEEEE 1px 4px 10px 2px
+
+
+[type='file'], [type='checkbox'], [type='radio']
+    margin-right: 1rem
+
+.filename-input
+    width: 40%
+    display: inline-block
+    height: 1rem
+
+.reveal-overlay
+    .reveal
+        width: 90%
+        padding: 0px
+
+.container 
+    margin: auto
+    width: 90%
+
+// GRAPHICS
+
+.graph, .graph table, .graph-container
+    font-family: Roboto Condensed
+    font-size: small
+    background-color: #FAFAFA
+    @extend .light-shadow
+    margin-bottom: 1rem
+
+.graph-header, .graph-footer
+    @extend .cell
+    background-color: white
+    position: relative
+
+.graph-main
+    @extend .cell
+    max-height: 350px
+    overflow-y: auto
+    overflow-x: hidden
+    position: relative  
+
+svg
+    font-family: 'Roboto Condensed', sans-serif
+    overflow: visible
+    stroke-width: 1px
+    text
+        font-size: small
+    path.domain 
+        stroke: $light-grey
+    
+.axis
+    position: relative
+    svg
+        overflow: visible
+    text 
+        fill: $axis-label-color
+        font-size: small
+    line
+        stroke: $gridlines
+
+// COMPONENTS
+            
+// ECV DASHBOARD
+
+
+.record-details
+    background-color: $rec-primary-color
+    padding: 0rem 1px
+    font-weight: 300
+    a
+        font-weight: bolder
+    b 
+        font-weight: 500
+    .details-header 
+        background-color: #fefefe
+        padding: 1rem
+        font-size: small
+        h4
+          color: $rec-primary-color  
+        .subtitle
+            font-family: unset
+        h5 div
+            line-height: 1.2rem
+            color: #9E9E9E
+    .tabs
+        text-transform: uppercase
+        font-weight: 500
+        @extend .grid-x
+        .tabs-title 
+            margin-right: 1px
+            a 
+                padding: 0.5rem
+                line-height: 1
+                color: white
+                background: $rec-primary-color
+                border-bottom: none
+                font-size: small
+                &:focus, &[aria-selected='true'] 
+                    background: $normal-text-color
+                    color: white
+                    &:hover
+                        color: white
+                &:hover 
+                    color: $normal-text-color
+                    border-bottom: none
+
+    .tabs-content
+        .tabs-panel
+            padding: 0px
+        .listKey 
+            font-family: Roboto Condensed
+            background-color: #e8ecef
+            text-transform: uppercase
+            border: white solid 1px
+            font-size: small
+            font-weight: 400
+        .listValue 
+            font-family: Roboto
+            color: black
+            word-wrap: break-word
+            word-break: break-all
+            font-size: small
+    tbody
+        font-weight: unset
+        font-size: unset
+            
+
+.table-view
+    tbody tr
+        cursor: pointer
+        &:hover
+            border: $gridlines solid 1px
+            // box-shadow: $gridlines 1px 4px 10px 2px
+            background-color: $rec-sel-bg
+
+
+.ecv-inventory
+    .switch-label
+        color: #9E9E9E
+        font-weight: 300
+        font-style: italic
+        padding-right: 0.5rem
+
+    div#recordDetails
+        background-color: white
+        margin: auto
+        width: 90%
+
+    .label-wrap
+        position: absolute
+        right: 0px
+        width: 0px
+
+    .bar-label
+        position: relative 
+        padding-left: 0.5rem
+        font-family: Roboto Condensed
+        font-style: italic
+        font-size: small
+        overflow-x: visible
+        width: 500px
+        b
+            font-weight: 900
+            font-size: small
+
+
+.data-selectors
+    @extend .callout
+    width: 100%
+    background-color: #FAFAFA
+    border: none
+
+    .deselectors
+        width: 100%
+        font-size: medium
+        font-family: Roboto Condensed
+
+        b
+            font-weight: 900
+            font-size: 1.2rem
+    
+    span.remove-selection 
+        padding: 0rem 1rem
+        background-color: #03A9F4
+        font-family: Roboto Condensed
+        margin: 1px
+        a
+            color: white
+            font-weight: 400
+    span.remove-all 
+        padding: 0rem 1rem
+        // background-color: #03A9F4
+        font-family: Roboto Condensed
+        margin: 1px
+        a
+            color: #03A9F4
+            font-weight: 400
+
+    ul.dropdown.menu 
+        .is-dropdown-submenu-parent
+            font-family: Roboto Slab
+            font-size: smaller
+            font-weight: 500
+            padding-right: 2rem
+        a 
+            color: unset
+            padding-left: 0px
+            border-bottom: none
+
+        li 
+            font-size: small
+            font-family: Roboto Condensed
+            .is-dropdown-submenu 
+                padding: 0.1rem 0.5rem
+                border: none
+
+            [disabled] 
+                color: #BDBDBD
+                font-style: italic
+                display: none
+             
+
+
+
+
+.tcdr-overview
+    .domains:nth-child(even), .product-group:nth-child(even)
+        background-color: $alternate-row-color
+    .domains
+        @extend .grid-x 
+        @extend .text-right
+    .domain
+        padding-right: 1rem
+        font-size: large
+        font-weight: bolder
+        @extend .cell
+    .ecvs
+        @extend .cell
+        @extend .grid-x 
+        @extend .align-middle
+        .grp
+            border-left: $light-grey solid 1px
+            margin-bottom: 1rem
+            @extend .cell
+    .ecv 
+        margin-right: 1rem
+        @extend .cell
+        @extend .grid-x
+    .products
+        margin: 0.3rem 0rem
+        @extend .cell
+        @extend .grid-x 
+        @extend .text-left 
+        @extend .align-middle
+    .product
+        padding-left: 1rem
+        font-weight: 300
+        @extend .cell
+    .graph-display 
+        margin-right: 10rem
+    .cfs
+        @extend .cell
+    .cf
+        @extend .cell
+        @extend .grid-x 
+        @extend .align-middle
+        position: relative
+
+    .ecv, .product, .cf
+        cursor: pointer
+
+    .ecv, .product, .cf
+        &:hover
+            text-decoration: underline
+    .cf, .top-record .bar-line
+        &:hover
+            border: $normal-text-color solid 1px
+            box-shadow: $normal-text-color 1px 4px 10px 2px
+    
+    .bar-line
+        padding: 0px
+        height: 1rem
+        position: relative
+        border: transparent solid 1px
+        box-shadow: transparent 1px 4px 10px 2px
+        border-left: #757575 solid 1px
+        margin-bottom: 1px
+
+
+.tcdr-timeline
+    .axis
+        @extend .cell 
+        @extend .small-10
+        @extend .small-offset-1
+    .product-label 
+        font-size: medium
+        font-weight: 100
+        color: #BDBDBD
+        padding: 0.5rem
+        font-style: italic
+        text-align: right
+    
+    .record-group
+        @extend .grid-x
+        @extend .align-top
+        cursor: pointer
+
+    .record-group:nth-child(even)
+        background-color: $alternate-row-color
+
+
+    .record-dropdown
+        font-size: small
+        font-family: Roboto Condensed
+        b
+            font-weight: 600
+            font-style: italic
+
+    .record, .entry 
+        @extend .cell
+        // background-color: #9E9E9E
+        margin-bottom: 1px
+    
+    .record
+        position: relative
+
+    .bar-line
+        position: relative
+        border-left: #757575 solid 1px
+        width: 100px
+        background-color: orange
+        height: 1.2rem
+        margin-bottom: 1px
+        &:hover
+            border: $normal-text-color solid 1px
+            box-shadow: $normal-text-color 1px 4px 10px 2px
+        // &.top-record
+        //     border-left: none
+
+    .indicators
+        position: absolute
+        width: 100%
+        top: 0.3rem
+
+    .indicator-line
+        position: absolute
+        height: 0.6rem
+        width: 100px
+        border: solid 1px
+
+    .entry-line  
+        position: relative
+        background-color: white
+        border-right: #757575 solid 1px
+        border-left: #757575 solid 1px
+        height: 1rem
+        border-bottom-style: solid
+        border-bottom-width: 5px
+
+ 
+    .entry-label-anchor
+        position: absolute
+        width: 0px
+        overflow-x: visible
+        top: 0px
+        right: -5px
+    
+    .entry-label
+        font-size: x-small
+        font-family: Roboto Condensed
+        width: 500px
+
+    .bar-label 
+        @extend .cell
+        max-height: 1rem
+        overflow: hidden
+
+.tcdr-donuts
+    .graph-main
+        max-height: none
+.pie
+    svg
+        overflow: visible
+    h6
+        text-align: center
+        // font-family: Roboto Condensed
+        // color: #BDBDBD
+
+    .p0_labelGroup-inner, .p1_labelGroup-inner, .p2_labelGroup-inner 
+        font-weight: 600

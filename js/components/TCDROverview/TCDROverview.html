@@ -1,0 +1,46 @@
+
+<div class="tcdr-overview" >
+        <div class="graph-container">
+            <div class="graph-header">
+                <x-axis ref="topaxis" nr-ticks="5" ></x-axis>
+            </div>
+                
+            <div class="graph-main">
+                <div v-for="domain in nestBy('Domain', ds)" class="domains">
+                    <div class="domain small-1">{{domain.key}}</div>
+                    <div class="cell small-11">
+                        <div class="ecvs" v-for="ecv in nestBy('ECVName', domain.values)">
+                                
+                            <div class="ecv small-2" @click="select({ECVName: ecv.key})" title="select an ECV or an ECV Product to see the TCDR Details, use the selection note to disable selections">
+                                <div class="cell ">{{ecv.key}}</div>
+                            </div> 
+                            <div class="grp auto">
+                                <div class="products" v-for="product in nestBy('ECVProduct', ecv.values)">
+                                    <div class="product small-4"  @click="select({ECVProduct:product.key})"  title="select an ECV or an ECV Product to see the TCDR Details, use the selection note to disable selections">{{product.key}}</div>
+                                    <div class="cell auto  graph-display">
+                                        <div class="cfs bar " v-for="(d,i) in sortByKey(nestBy('CurrentFuture', product.values))" >
+                                            <div class="cf bar-line "  v-d3-data="d"  data-holder  @click="select({ECVProduct:product.key, CurrentFuture: d.key})"  title="select an ECV or an ECV Product to see the TCDR Details, use the selection note to disable selections">
+                                                <div class="label-wrap">
+                                                    <div class="bar-label" v-d3-data="d" ></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                                
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                    
+                </div>  
+           
+            </div>
+            <div class="graph-footer" >
+                <div class="float-left" style="position:absolute"><a style="margin-left: 1rem;" @click="resetOptions()">reset all</a></div>
+                <x-axis ref="bottomaxis" orientation="bottom" nr-ticks="5" ></x-axis>
+            </div>
+        </div>
+        
+    </div>      

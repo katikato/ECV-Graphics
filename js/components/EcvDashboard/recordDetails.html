@@ -1,0 +1,577 @@
+<!-- This demo uses flex grid but you can use float grid too -->
+<div class="reveal" id="recordDetails" data-reveal>
+
+  <div  class="record-details content" >
+    <a class="float-right button" data-close aria-label="Close modal" ><i class="fa fa-times"></i></a>
+  
+    <div class="details-header">
+      <h4 >Detailed information for data record: {{details.RecordID}}</h4>
+      <h5 class="subtitle">{{details.ECV}}
+        <br><div>{{details.ResponsibleOrg}}: {{details.ECV_Product}} {{details.PhysQuantity}}</div>
+      </h5>
+      <div>
+          The terms 'Current' and 'Future' refer to existing and planned <b>climate data records</b>, respectively. They do not indicate the status of the <b>involved satellite missions</b>. A 'Future' climate data record can be planned for past, current and future satellite missions.
+      </div>         
+    </div>
+
+    <div class="detail-tabs">
+        <ul class="tabs" data-tabs id="record-detail-tabs">
+          <li class="tabs-title is-active"><a href="#ECV_items_Current_list_tab_data_0" >Record Information</a></li>
+          <li  class="tabs-title"><a href="#ECV_items_Current_list_tab_data_1" >Stewardship</a></li>
+          <li  class="tabs-title" :class="{hide: !isCurrent}"><a href="#ECV_items_Current_list_tab_data_2" >Generation Process</a></li>
+          <li  class="tabs-title"><a href="#ECV_items_Current_list_tab_data_3" >Record Characteristics</a></li>
+          <li  class="tabs-title" :class="{hide: !isCurrent}" ><a href="#ECV_items_Current_list_tab_data_4" >Documentation</a></li>
+          <li  class="tabs-title"><a href="#ECV_items_Current_list_tab_data_5" >Accessibility</a></li>
+          <li  class="tabs-title"><a href="#ECV_items_Current_list_tab_data_6" >Applications</a></li>
+        </ul>
+
+
+
+        <div class="tabs-content" data-tabs-content="record-detail-tabs">
+          <div class="tabs-panel is-active" id="ECV_items_Current_list_tab_data_0">
+            <table class="ODB_listItem">
+              <tbody>
+                <tr>
+                  <td class="listKey" colspan="2">RecordID</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.RecordID"></td>
+                </tr>
+                <tr>
+                  <td class="listKey" colspan="2">Current or future data record</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CurrentFuture"></td>
+                </tr>
+                <tr>
+                  <td class="listKey" colspan="2">published</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.published"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_1">
+            <table class="ODB_listItem">
+              <tbody>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #1: Who is the individual populating the questionnaire?">Responder name</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ResponderName"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #2: Please state the e-mail address of the individual populating the questionnaire.">Responder E-mail</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ResponderEmail"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="DB management - a co-editor can edit any ECV inventory entry assigned to them.">Co-editor E-mail (optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.EditEmail"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="DB management - an observer can view any ECV inventory entry assigned to them.">Observer E-mail (optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ReadEmail"></td>
+                </tr>
+                
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" rowspan="4" title="Question #3: What is the Data Record Identifier of the TCDR? In case this TCDR is part of a family of products, please provide the TCDR family label.">Data Record identification</td>
+                  <td class="listKey hasTitle" title="Question #3a: What is the Data Record Identifier of the TCDR?">Data record identifier</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.DataRecordIdentifier"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="You can specify an official term here which people should use when referring to your TCDR in text.">Data record name and version (optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.DataRecordNameVersion"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #3b: In case this TCDR is part of a family of products, please provide the TCDR family name.">TCDR family</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.TCDRFamily"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="You can specify the official citation reference which people should use when citing your TCDR in publications.">Official citation reference (optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.DataCitation"></td>
+                </tr>
+                <!-- ECV_items_Current - Stewardship - Group_S3 -->
+
+                <!-- Peter no nested data
+                      1 nested rows -->
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #4: What is the name of the organisation with overall responsibility for the data record?">Responsible Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ResponsibleOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #5: Which organisational entity is responsible for collecting the satellite observations?">Collection Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CollectionOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #6: Which organisational entity is responsible for calibrating the satellite observations?">Calibration Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CalibrationOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #7: Which organisational entity is responsible for generating and maintaining the FCDR (i.e. correcting, geolocating and applying calibration parameters to the satellite observations)?">FCDR Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.FCDROrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #8: Which organisational entity is responsible for inter-calibrating the satellite observations?">Inter-calibration Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.InterCalibrationOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #9: Which organisational entity is responsible for generating and maintaining the TCDR (i.e. conversion of the FCDR to geophysical parameters)?">TCDR Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.TCDROrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #10: Which organisational entity is responsible for checking if the resultant TCDR(s) meet the relevant GCOS requirements, and identifying any required processing updates?">GCOS Requirements Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOSReqmtsAssessOrg"></td>
+                </tr>
+                <!-- ECV_items_Current - Stewardship - GroupPeerReviewOrg -->
+
+                <!-- Peter no nested data
+                      1 nested rows -->
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" rowspan="2" title="Question #11: Which organisational entity is responsible for organising the peer review of the data record? Please describe the status of the peer review.">Peer-review organisation</td>
+                  <td class="listKey hasTitle" title="Question #11a: Which organisational entity is responsible for organising the peer review of the data record?">Peer-review organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.PeerReviewOrg"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #11b: Please describe the status of the peer review.">Status of peer-review</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.PeerReviewStatus"></td>
+                </tr>
+                <!-- ECV_items_Current - Stewardship - Group_S5 -->
+                <tr v-if="!isCurrent">
+                    <td class="listKey hasTitle" colspan="2" title="Question #11: Which organisational entity is responsible for organising the peer review of the data record? Please describe the status of the peer review.">Peer-review organisation</td>
+                    <td class="itemNoCheck">&nbsp;</td>
+                    <td class="listValue" v-html="details.PeerReviewOrg"></td>
+                  </tr>
+
+                <!-- Peter no nested data
+                      1 nested rows -->
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #12: Which organisational entity is responsible for collating, archiving and maintaining the resultant climate data records (e.g. archiving observations, FCDRs, TCDRs and all ancillary information such as processing configurations used in their generation, comparison with GCOS requirements, peer reviews, external reference data, etc)?">Archiving Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ArchivingOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #13: Which organisational entity is responsible for servicing user requests for the data record?">User-service organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.UserServiceOrg"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #14: Which organisational entity is responsible for responding to user feedback on the use of this data record?">User-feedback organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.UserFeedbackOrg"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" colspan="2" title="Question #15: Until when are there firm commitments in place to continue to maintain and provide user support for this data record?">Maintenance and user support commitment</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CommitmentDate"></td>
+                </tr>
+                
+                <tr v-if="!isCurrent">
+                  <td class="listKey " colspan="2" >Level of commitment</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.LevelCommitment"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_2" :class="{hide: !isCurrent}">
+            <table>
+              <tbody>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #16: If the data record has been produced in conjunction with any external domain-specific generation and assessment body, then please identify the external domain-specific bodies engaged in the generation of the data record.">Assessment Body</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AssessmentBody"></td>
+                </tr>
+
+                <tr>
+                  <td class="listKey hasTitle" rowspan="2" title="Question #17: Please describe the quality assurance process which has been implemented for the data record generation process. If it has been done in conjunction with a relevant international coordination body, then please indicate which international organisation or coordination body covered this aspect for the data record considered.">Quality Assurance</td>
+                  <td class="listKey hasTitle" title="Question #17a: Please describe the quality assurance process which has been implemented for the data record generation process.">QA Process</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.QualityAssProcess"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" title="Question #17b: If it has been done in conjunction with a relevant international coordination body, then please indicate which international organisation or coordination body covered this aspect for the data record considered.">QA Organisation</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.QualityAssOrg"></td>
+                </tr>
+
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #18: If the compliance status of the TCDR with the GCOS requirements has been assessed, then please provide a link to the document describing the results of the assessment.">GCOS-requirements compliance assessment</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOSReqmtsAssessLink"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #19: If the degree of compliance with the GCOS guidelines has been assessed through a peer-review process, then please provide links to the documents describing the results of the assessment.">GCOS-guidelines peer-review compliance assessment</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue"> {{details.GCOSGuidAssessLink}}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #20: If a quantitative maturity index assessment has been performed for the data record, then please provide a link to the document describing the results of this assessment.">Quantitative maturity index assessment</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.QuantMaturityAssessLink"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_3">
+            <table >
+              <tbody>
+                <tr>
+                  <td class="listKey hasTitle" rowspan="2" title="Question #21: To which ECV does the data record contribute? Which ECV Product is addressed by the data record?">ECV and ECV Product</td>
+                  <td class="listKey hasTitle" title="Question #21a: To which ECV does the data record contribute?">ECV</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ECVName"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" title="Question #21b: Which ECV Product is addressed by the data record?">ECV Product</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ECVProduct"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #22: Which physical quantity does the data record provide?">Physical quantity</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.PhysQuantity"></td>
+                </tr>
+                <tr v-if="isCurrent" >
+                  <td class="listKey hasTitle" colspan="2" title="Question #23: What are the SI units of the data record?">SI units</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.PhysQuantUnits"></td>
+                </tr>
+                <!-- <tr>
+                  <td class="listKey" colspan="2"># of satellite / instrument combinations</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.n_sat_inst"></td>
+                </tr>
+                <tr>
+                  <td class="listKey" colspan="2">Total duration (days)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.sum_duration"></td>
+                </tr> -->
+              
+                <tr>
+                  <td colspan="2" class="listKey hasTitle" title="Question #24: Which satellite/instrument combination is used to generate the data record? For each pair satellite/instrument, please specify the level of data used, as well as the corresponding period of time of data usage (start- and end-date).">Satellite/Instrument combination</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td>
+                    <table class="ODB_inlineTable">
+                      <thead>
+                        <tr>
+                          <th class="listKey" style="width:20%;">Satellite</th>
+                          <th class="listKey" style="width:20%;">Instrument</th>
+                          <th class="listKey" style="width:20%;">Start Date</th>
+                          <th class="listKey" style="width:20%;">End Date</th>
+                          <th class="listKey" style="width:20%;">Data Level</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="siComb in details.GroupSatelliteInstrument">
+                          <td class="listValue" v-html="siComb.SatAcronym"></td>
+                          <td class="listValue" v-html="siComb.InstAcronym"></td>
+                          <td class="listValue" v-html="siComb.DataStartDate"></td>
+                          <td class="listValue" v-html="siComb.DataEndDate"></td>
+                          <td class="listValue" v-html="siComb.DataLevel"></td>
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #24: Please add comments as necessary">Satellite/Instrument combination Comments (Optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.SatInstDataComment"></td>
+                </tr>
+                
+                <tr v-if="isCurrent">
+                  <td colspan="2" class="listKey hasTitle" title="Question #25: Against which satellite/instrument combination has the data record been inter-calibrated? For each pair satellite/sensor, please specify the level of data used, as well as the corresponding period of time of data usage (start- and end-date).">Inter-calibration Satellite/Instrument combination</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td>
+                    <table class="ODB_inlineTable">
+                      <thead>
+                        <tr>
+                          <th class="listKey" style="width:20%;">Satellite</th>
+                          <th class="listKey" style="width:20%;">Instrument</th>
+                          <th class="listKey" style="width:20%;">Start Date</th>
+                          <th class="listKey" style="width:20%;">End Date</th>
+                          <th class="listKey" style="width:20%;">Data Level</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="siComb in details.GroupInterCalSatelliteInstrument">
+                          <td class="listValue" v-html="siComb.SatAcronym"></td>
+                          <td class="listValue" v-html="siComb.InstAcronym"></td>
+                          <td class="listValue" v-html="siComb.DataStartDate"></td>
+                          <td class="listValue" v-html="siComb.DataEndDate"></td>
+                          <td class="listValue" v-html="siComb.DataLevel"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" colspan="2" title="Question #25: Please add comments as necessary">Inter-calibration Satellite/Instrument combination Comments (Optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.SatInstCalibComment"></td>
+                </tr>
+                
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" rowspan="2" title="Question #26: If this data record is utilising a ground-based network for calibration purposes, then please specify the network and provide a link to the source.">Ground-based network calibration</td>
+                  <td class="listKey hasTitle" title="Question #26a: If this data record is utilising a ground-based network for calibration purposes, then please specify the network.">Ground-based network</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GroundBasedCalNetwork"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #26b: If this data record is utilising a ground-based network for calibration purposes, then please provide a link to the source.">Link to source</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GroundBasedCalLink"></td>
+                </tr>
+                
+                <tr>
+                  <td class="listKey hasTitle" rowspan="3" title="Question #27: What is the geographical coverage of the TCDR? Please specify the geographical extent and which domains (land, inland water, ocean, ice) are covered by the TCDR.">Geographical Coverage</td>
+                  <td class="listKey hasTitle" title="Question #27a: Please specify the geographical extent of the TCDR.">Extent (Lat/Long)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GeogrCoverageExtent"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" title="Question #27b: Please specify which domains (land, inland water, ocean, ice) are covered by the TCDR.">Domain</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GeogrCoverageDomain"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" title="Question #27b: Please add comments as necessary">Domain Comment (Optional)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GeogrCoverageDomainComment"></td>
+                </tr>
+              
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #28: What is the horizontal resolution of the TCDR (in km)?">Horizontal resolution</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.HorizResolution"></td>
+                </tr>
+                
+                <!-- <tr>
+                  <td class="listKey" rowspan="2">Target reqs.</td>
+                  <td class="listKey">GCOS 154</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS154_HorizontalRes"></td>
+                </tr>
+                <tr>
+                  <td class="listKey">GCOS 200</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS200_HorizontalRes"></td>
+                </tr> -->
+                
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #29: What is the vertical resolution of the TCDR (in km)?">Vertical resolution</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.VertResolution"></td>
+                </tr>
+                
+                <!-- <tr>
+                  <td class="listKey" rowspan="2">Target reqs.</td>
+                  <td class="listKey">GCOS 154</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS154_VerticalRes"></td>
+                </tr>
+                <tr>
+                  <td class="listKey">GCOS 200</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS200_VerticalRes"></td>
+                </tr> -->
+                
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #30: What is the temporal resolution of the TCDR (in days)?">Temporal resolution</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.TempResolution"></td>
+                </tr>
+                
+                <!-- <tr>
+                  <td class="listKey" rowspan="2">Target reqs.</td>
+                  <td class="listKey">GCOS 154</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS154_TemporalRes"></td>
+                </tr>
+                <tr>
+                  <td class="listKey">GCOS 200</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS200_TemporalRes"></td>
+                </tr> -->
+                
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #31: What is the accuracy of the TCDR?">Accuracy</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.Accuracy"></td>
+                </tr>
+<!--               
+                <tr>
+                  <td class="listKey" rowspan="2">Target reqs.</td>
+                  <td class="listKey">GCOS 154</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS154_Accuracy"></td>
+                </tr>
+                <tr>
+                  <td class="listKey">GCOS 200</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS200_Uncertainty"></td>
+                </tr> -->
+              
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #32: What is the stability of the TCDR?">Stability</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.Stability"></td>
+                </tr>
+                
+                <!-- <tr>
+                  <td class="listKey" rowspan="2">Target reqs.</td>
+                  <td class="listKey">GCOS 154</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS154_Stability"></td>
+                </tr>
+                <tr>
+                  <td class="listKey">GCOS 200</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.GCOS200_Stability"></td>
+                </tr> -->
+            
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #33: What is the start-date of the continuous data record?">Start date of TCDR</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.StartDateTCDR"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #34: What is the end-date of the continuous data record?">End-date of TCDR</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.EndDateTCDR"></td>
+                </tr>
+                <tr v-if="!isCurrent">
+                  <td class="listKey" colspan="2">TCDR Heritage</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.TCDRHeritage"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_4"  :class="{hide: !isCurrent}">
+            <table class="ODB_listItem">
+              <tbody>
+
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #35: Please provide the links to the documents describing all the steps taken in the generation of FCDRs and TCDRs, including algorithms used, on-board calibration, specific FCDRs used, version management system used, and characteristics and outcomes of validation activities.">CDR-generation documentation (link)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CDRGenerationLink"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #36: Please provide link(s) to documentation provided with the data record.">Data documentation (link)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CDRDocumentationLink"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #37: Please provide link to a document describing the scientific review process related to FCDR/TCDR construction (including algorithm selection), FCDR/TCDR quality and applications.">Scientific-review process (link)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.SciReviewProcessLink"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_5">
+            <table>
+              <tbody>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" colspan="2" title="Question #38: Please provide information on the access point (e.g. contact e-mail) for access to data records.">Access point</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AccessPoint"></td>
+                </tr>
+                <tr  v-if="isCurrent">
+                  <td class="listKey hasTitle" rowspan="3" title="Question #39: What are the data-access conditions? Please state whether access is made through an ordering system and if registration is required.">Access conditions</td>
+                  <td class="listKey hasTitle" title="Question #39a: What are the data-access conditions?">Type of access</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AcessType"></td>
+                </tr>
+                <tr  v-if="!isCurrent">
+                  <td class="listKey hasTitle" title="Question #39: What are the data-access conditions? Please state whether access is made through an ordering system and if registration is required.">Access conditions</td>
+                  <td class="listKey hasTitle" title="Question #39a: What are the data-access conditions?">Type of access</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AcessType"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #39a: In case of constrained or selected access, please describe the restrictions that apply or point to web resources where this information can be found.">Restrictions to access</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AccessRestrictions"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #39b: Please state whether access is made through an ordering system and if registration is required.">Registration / ordering</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.AccessProcess"></td>
+                </tr>
+    
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" colspan="2" title="Question #40: Please provide link(s) to the data record.">Data record (link)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.TCDRLink"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #41: In case the FCDRs are also available to the user community, please provide a link to that data record.">FCDR availability (link)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.FCDRAccess"></td>
+                </tr>
+          
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" rowspan="2" title="Question #42: What formats are available for the data record and what standard has been used for the metadata?">Data format and metadata standard</td>
+                  <td class="listKey hasTitle" title="Question #42a: What formats are available for the data record?">Data format</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.DataFormat"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" title="Question #42b: What standard has been used for the metadata?">Metadata standard</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.MetadataStandard"></td>
+                </tr>
+                <tr v-if="isCurrent">
+                  <td class="listKey hasTitle" colspan="2" title="Question #43: What dissemination mechanisms are available for the data record? Please also state whether the data record is registered in international dissemination platforms (e.g. Obs4MIPs, GEOSS Portal).">Dissemination mechanisms</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.Dissemination"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #44: When was the data record released to the user community (year)?">Release date (yyyy)</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ReleaseDate"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tabs-panel" id="ECV_items_Current_list_tab_data_6">
+            <table >
+              <tbody>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #45: What specific climate applications does this data record support?">Climate applications</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.ClimateApplications"></td>
+                </tr>
+                <tr>
+                  <td class="listKey hasTitle" colspan="2" title="Question #46: Please provide examples of effective users of this data record.">Users</td>
+                  <td class="itemNoCheck">&nbsp;</td>
+                  <td class="listValue" v-html="details.CDRUsers"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+      
+    
+  </div>      
+</div>
